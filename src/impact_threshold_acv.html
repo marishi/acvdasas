@@ -1,25 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
+	
+	{%if isnot_int %}{% else %}整数を入力してください<br>{% endif %}
 	<form action="/impact_threshold_acv.html" method="post">
 		対反動性能
 		<input type="number" name="reaction_performance" min="0" value ="0"></input>
 		<input type="submit" value="Submit">
 	</form>
 
-	{% if stagger %}
+	{% if isnot_int %}
 		{% for freeze_weapon in freeze_weapons %}
-			<b>{{ freeze_weapon.name }} </b> : {{ freeze_weapon.impact }} <br> 
+		<b>{{ freeze_weapon.name }} </b> : {{ freeze_weapon.impact }} <br> 
 		{% endfor %}
 		<div id="threshold">- Freeze : {{ freeze }} -<br> </div>
-		
+	
 		{% for stagger_weapon in stagger_weapons %}
-			<b>{{ stagger_weapon.name }} </b> : {{ stagger_weapon.impact }} <br> 
+		<b>{{ stagger_weapon.name }} </b> : {{ stagger_weapon.impact }} <br> 
 		{% endfor %}
 		<div id="threshold">- Stagger : {{ stagger }} -<br> </div>
-		
+	
 		{% for normal_weapon in normal_weapons %}
-			<b>{{ normal_weapon.name }} </b> : {{ normal_weapon.impact }} <br> 
+		<b>{{ normal_weapon.name }} </b> : {{ normal_weapon.impact }} <br> 
 		{% endfor %}
+	
 	{% endif %}
+
 {% endblock %}

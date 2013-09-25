@@ -25,25 +25,34 @@ class ImpactThresholdAcvPage(webapp2.RequestHandler):
 
 	def post(self):
 
-		stagger = int(self.request.get('reaction_performance'))
-		freeze = stagger/0.8
+		rp = self.request.get('reaction_performance')
+		template_value = {}
+		if rp.isdigit():
+			stagger = int(rp)
+			freeze = stagger/0.8
 
-		weapons = weapon.getWeapons()		
-		weapons.sort(key=attrgetter('impact'), reverse=True)
+			weapons = weapon.getWeapons()		
+			weapons.sort(key=attrgetter('impact'), reverse=True)
 	
-		freeze_weapons = filter(lambda weapon: weapon.impact >= freeze, weapons)
-		stagger_weapons = filter(
-			lambda weapon: stagger <= weapon.impact and weapon.impact < freeze,
-			weapons)
-		normal_weapons = filter(lambda weapon: weapon.impact < stagger, weapons)
+			freeze_weapons = filter(
+				lambda weapon: weapon.impact >= freeze, weapons)
+
+			stagger_weapons = filter(
+				lambda weapon: stagger <= weapon.impact and weapon.impact < freeze, weapons)
+			normal_weapons = filter(
+				lambda weapon: weapon.impact < stagger, weapons)
 	
-		template_value = {
+			template_value = {
 			'freeze_weapons' : freeze_weapons,
 			'stagger_weapons' : stagger_weapons,
 			'normal_weapons' : normal_weapons,
 			'stagger' : stagger,
-			'freeze' : freeze}
+			'freeze' : freeze,
+			'isnot_int': True}
+		else:
+			template_value = {'isnot_int' : False}
 
+		logging.info(template_value)
 		path = os.path.join(os.path.dirname(__file__), self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
