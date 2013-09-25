@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<part>
+
+<weapon>
+	<name>KO-9K2（fixed）</name>
+	<impact>2371</impact>
+</weapon>
+
+<weapon>
+	<name>TANSY RF12（威力特化）</name>
+	<impact>893</impact>
+</weapon>
+
+<weapon>
+	<name>OXEYE HG25（威力特化）</name>
+	<impact>1553</impact>
+</weapon>
+
+<weapon>
+	<name>UVF-17</name>
+	<impact>1305</impact>
+</weapon>
+
+<weapon>
+	<name>UMM-21 DIMAPUR</name>
+	<impact>1214</impact>
+</weapon>
+
+<weapon>
+	<name>KO-2H6/STREKOZA</name>
+	<impact>554</impact>
+</weapon>
+
+</part>

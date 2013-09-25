@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css">
+	</head>
+
+	<body>
+	<div id="header">
+		<div id="header_title">ACVD Assembly Assistant</div>
+	</div>
+
+	<div id="center">
+
+		<div id="sidebar">
+			<div id="sidebar_link"><a href="/">Home</a></div>
+			<div id="sidebar_link">衝撃境界値計算</div>
+			<div id="sidebar_link">貫通境界値計算</div>
+			<div id="sidebar_link">ロックオン距離計算</div>
+			<div id="sidebar_link"><a href="/impact_threshold_acv.html">衝撃境界値計算（ACV）</a></div>
+			<div id="sidebar_link">貫通境界値計算（ACV）</div>
+		</div>
+
+		<div id="main">
+			{% block content %}{% endblock %}
+		</div>
+	</div>
+
+	</body>
+<html>
