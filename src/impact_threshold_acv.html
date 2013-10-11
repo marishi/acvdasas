@@ -2,7 +2,7 @@
 
 {% block content %}
 	
-	{%if isnot_int %}{% else %}整数を入力してください<br>{% endif %}
+	{%if is_input_error %}整数を入力してください<br>{% endif %}
 	<div id="input_form">
 	<form action="/impact_threshold_acv.html" method="post">
 		対反動性能
@@ -11,20 +11,34 @@
 	</form>
 	</div>
 
-	{% if isnot_int %}
-		{% for freeze_weapon in freeze_weapons %}
-		<b>{{ freeze_weapon.name }} </b> : {{ freeze_weapon.impact }} <br> 
-		{% endfor %}
-		<div id="threshold">- Freeze : {{ freeze }} -<br> </div>
-	
-		{% for stagger_weapon in stagger_weapons %}
-		<b>{{ stagger_weapon.name }} </b> : {{ stagger_weapon.impact }} <br> 
-		{% endfor %}
-		<div id="threshold">- Stagger : {{ stagger }} -<br> </div>
-	
-		{% for normal_weapon in normal_weapons %}
-		<b>{{ normal_weapon.name }} </b> : {{ normal_weapon.impact }} <br> 
-		{% endfor %}
+	{% if has_result %}
+		{% if freeze_weapons %}
+			{% for freeze_weapon in freeze_weapons %}
+			<b>{{ freeze_weapon.name }} </b> : {{ freeze_weapon.impact }} <br> 
+			{% endfor %}
+		{% else %}
+			<b>No DATA</b>
+		{% endif %}
+
+		<div id="threshold"><p>- Freeze : {{ freeze }} -</p> </div>
+
+		{% if stagger_weapons %}
+			{% for stagger_weapon in stagger_weapons %}
+			<b>{{ stagger_weapon.name }} </b> : {{ stagger_weapon.impact }} <br> 
+			{% endfor %}
+		{% else %}
+			<b>No DATA</b>
+		{% endif %}
+
+		<div id="threshold"><p>- Stagger : {{ stagger }} -</p> </div>
+
+		{% if normal_weapons %}
+			{% for normal_weapon in normal_weapons %}
+			<b>{{ normal_weapon.name }} </b> : {{ normal_weapon.impact }} <br> 
+			{% endfor %}
+		{% else %}
+			<b>No DATA</b>
+		{% endif %}
 	
 	{% endif %}
 

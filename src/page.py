@@ -19,7 +19,7 @@ class ImpactThresholdAcvPage(webapp2.RequestHandler):
 	page_name = 'impact_threshold_acv.html'
 	
 	def get(self):
-		template_value = {}
+		template_value = {'is_input_error':False,'has_result':False}
 		path = os.path.join(os.path.dirname(__file__), self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
@@ -29,7 +29,7 @@ class ImpactThresholdAcvPage(webapp2.RequestHandler):
 		template_value = {}
 		if rp.isdigit():
 			stagger = int(rp)
-			freeze = stagger/0.8
+			freeze = int(stagger/0.8)
 
 			weapons = weapon.getWeapons()		
 			weapons.sort(key=attrgetter('impact'), reverse=True)
@@ -48,9 +48,10 @@ class ImpactThresholdAcvPage(webapp2.RequestHandler):
 			'normal_weapons' : normal_weapons,
 			'stagger' : stagger,
 			'freeze' : freeze,
-			'isnot_int': True}
+			'is_input_error': False,
+			'has_result':True}
 		else:
-			template_value = {'isnot_int' : False}
+			template_value = {'is_input_error' : True, 'has_result':False}
 
 		logging.info(template_value)
 		path = os.path.join(os.path.dirname(__file__), self.page_name)
