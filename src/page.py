@@ -56,4 +56,35 @@ class ImpactThresholdAcvPage(webapp2.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
+class LockonRangePage(webapp2.RequestHandler):
+	page_name = 'lockon_range.html'
+	
+	def get(self):
+		template_value = {'is_input_error':False,'has_result':False}
+		path = os.path.join(os.path.dirname(__file__), self.page_name)
+		self.response.out.write(template.render(path, template_value))
+
+	def post(self):
+
+		camera = self.request.get('camera')
+		fcs_range = self.request.get('fcs_range')
+		template_value = {}
+
+		if camera.isdigit() and fcs_range.isdigit() :
+			camera_int = int(camera)
+			fcs_range_int = int(fcs_range)
+
+			lockon_range = fcs_range_int * ((camera_int+500.0)/1000.0)
+	
+			template_value = {
+			'lockon_range' : int(lockon_range),
+			'is_input_error': False,
+			'has_result':True}
+		else:
+			template_value = {'is_input_error' : True,'has_result':False}
+
+		logging.info(template_value)
+		path = os.path.join(os.path.dirname(__file__), self.page_name)
+		self.response.out.write(template.render(path, template_value))
+
 

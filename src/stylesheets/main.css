@@ -70,3 +70,7 @@ div {
 #input_form {
 	padding-bottom:30px;
 }
+
+input.number {
+	width:30px;
+}
