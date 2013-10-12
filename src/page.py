@@ -99,13 +99,13 @@ class DamagePage(webapp2.RequestHandler):
 		self.response.out.write(template.render(path, template_value))
 
 	def damage(self,attack,defense):
-		if attack < defense:
+		if attack <= defense:
 			defe = int(defense / 500.0)
 
 			dam = attack * 0.25 - ( (attack*0.01) * defe ) 
 			return ('跳弾',int(dam))
 
-		elif defense <= attack and attack < defense:
+		elif defense < attack and attack < defense*1.3:
 			return ('小貫通','未実装')
 		else:
 			return ('大貫通','未実装')
