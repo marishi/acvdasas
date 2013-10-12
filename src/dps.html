@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+	
+	{%if is_input_error %}整数を入力してください<br>{% endif %}
+	<div id="input_form">
+	<form action="/dps.html" method="post">
+		ダメージ
+		<input class="number" type="number" name="damage" min="0" value ="0"></input>
+		同時発射数（武器）
+		<input class="number" type="number" name="synchro_num" min="1" value ="1"></input>
+		リロード時間（武器）
+		<input class="number" type="number" name="reload" min="0" value ="0"></input>
+		<input type="submit" value="Submit">
+	</form>
+	</div>
+
+	{% if has_result %}
+		DPS：{{ dps }}<br>
+	{% endif %}
+
+	<p>簡易なDPS計算ができます。<br>
+	ダメージは武器の攻撃力ではなく、実際に敵に与えるダメージを入力してください。<br>
+	同時発射数はショットガンや３連バトライを計算するときに利用してください。
+	</p>
+	<p>
+	腕部の射撃安定性などにより実際のDPSとは違う結果になるので、参考程度にしてください。
+	</p>
+	<p>
+	計算式：ダメージ×同時発射数÷リロード時間×60
+	</p>
+
+{% endblock %}

@@ -124,3 +124,34 @@ class DamagePage(webapp2.RequestHandler):
 		self.response.out.write(template.render(path, template_value))
 
 
+class DPSPage(webapp2.RequestHandler):
+	page_name = 'dps.html'
+	
+	def get(self):
+		template_value = {'is_input_error':False,'has_result':False}
+		path = os.path.join(os.path.dirname(__file__), self.page_name)
+		self.response.out.write(template.render(path, template_value))
+
+	def post(self):
+
+		damage = self.request.get('damage')
+		synchro_num = self.request.get('synchro_num')
+		rel = self.request.get('reload')
+
+		template_value = {}
+
+		if damage.isdigit() and synchro_num.isdigit() and rel.isdigit() :
+
+			dps = formula.dps( int(damage), int(synchro_num), int(rel) )				
+			template_value = {
+			'dps' : dps,
+			'is_input_error': False ,
+			'has_result':True}
+		else:
+			template_value = {'is_input_error' : True,'has_result':False}
+
+		logging.info(template_value)
+		path = os.path.join(os.path.dirname(__file__), self.page_name)
+		self.response.out.write(template.render(path, template_value))
+
+
