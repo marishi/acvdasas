@@ -5,6 +5,7 @@ import cgi
 import os
 import weapon
 import logging
+import formula
 
 from google.appengine.api import users
 from google.appengine.ext import db
@@ -77,7 +78,7 @@ class LockonRangePage(webapp2.RequestHandler):
 			camera_int = int(camera)
 			fcs_range_int = int(fcs_range)
 
-			lockon_range = fcs_range_int * ((camera_int+500.0)/1000.0)
+			lockon_range = formula.lockon_range(fcs_range_int,camera_int)
 	
 			template_value = {
 			'lockon_range' : int(lockon_range),
@@ -98,18 +99,6 @@ class DamagePage(webapp2.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
-	def damage(self,attack,defense):
-		if attack <= defense:
-			defe = int(defense / 500.0 + 0.9)
-
-			dam = attack * 0.25 - ( (attack*0.01) * defe ) 
-			return ('跳弾',int(dam))
-
-		elif defense < attack and attack < defense*1.3:
-			return ('小貫通','未実装')
-		else:
-			return ('大貫通','未実装')
-
 	def post(self):
 
 		attack = self.request.get('attack')
@@ -120,7 +109,7 @@ class DamagePage(webapp2.RequestHandler):
 			attack_int = int(attack)
 			defense_int = int(defense)
 
-			result = self.damage(attack_int,defense_int)
+			result = formula.damage(attack_int,defense_int)
 				
 			template_value = {
 			'penetration' : result[0] ,
