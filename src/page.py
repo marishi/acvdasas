@@ -100,7 +100,7 @@ class DamagePage(webapp2.RequestHandler):
 
 	def damage(self,attack,defense):
 		if attack <= defense:
-			defe = int(defense / 500.0)
+			defe = int(defense / 500.0 + 0.9)
 
 			dam = attack * 0.25 - ( (attack*0.01) * defe ) 
 			return ('跳弾',int(dam))
