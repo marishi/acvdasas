@@ -150,7 +150,7 @@ class DPSPage(webapp2.RequestHandler):
 		if all( self.paramCheck(num) for num in (damage, synchro_num, rel) ): 
 			dps = formula.dps( int(damage), int(synchro_num), int(rel) )				
 			template_value = {
-			'dps' : dps,
+			'dps' : round(dps,1),
 			'is_input_error': False ,
 			'has_result':True}
 		else:
