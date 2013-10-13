@@ -2,15 +2,15 @@
 
 {% block content %}
 	
-	{%if is_input_error %}整数を入力してください<br>{% endif %}
+	{%if is_input_error %}正の整数を入力してください<br>{% endif %}
 	<div id="input_form">
 	<form action="/dps.html" method="post">
 		ダメージ
-		<input class="number" type="number" name="damage" min="0" value ="0"></input>
+		<input class="number" type="number" name="damage" min="1" value ="1"></input>
 		同時発射数（武器）
 		<input class="number" type="number" name="synchro_num" min="1" value ="1"></input>
 		リロード時間（武器）
-		<input class="number" type="number" name="reload" min="0" value ="0"></input>
+		<input class="number" type="number" name="reload" min="1" value ="1"></input>
 		<input type="submit" value="Submit">
 	</form>
 	</div>

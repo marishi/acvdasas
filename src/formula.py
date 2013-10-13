@@ -17,4 +17,4 @@ def lockon_range(fcs_range,camera):
 	return fcs_range * ((camera + 500.0)/1000.0)
 
 def dps(damage,synchro_ammo,rel):
-	return damage*synchro_ammo*60/rel
+	return damage*synchro_ammo*60.0/rel

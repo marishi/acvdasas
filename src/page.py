@@ -132,16 +132,22 @@ class DPSPage(webapp2.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
-	def post(self):
+	def paramCheck(self,n):
+		if not n.isdigit():
+			return False
+		
+		return int(n) > 0
 
+	def post(self):
+		
 		damage = self.request.get('damage')
 		synchro_num = self.request.get('synchro_num')
 		rel = self.request.get('reload')
 
 		template_value = {}
 
-		if damage.isdigit() and synchro_num.isdigit() and rel.isdigit() :
-
+		# damage, synchro_num, relが１以上の整数であるかどうかをチェックする
+		if all( self.paramCheck(num) for num in (damage, synchro_num, rel) ): 
 			dps = formula.dps( int(damage), int(synchro_num), int(rel) )				
 			template_value = {
 			'dps' : dps,
