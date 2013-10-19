@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block title %}
+貫通閾値計算
+{% endblock %}
+
 {% block content %}
 	
 	{%if is_input_error %}整数を入力してください<br>{% endif %}
@@ -12,8 +16,8 @@
 	</div>
 
 	{% if has_result %}
-		通常時：跳弾 &lt {{ ricochet }}〜(小貫通)〜{{ penetration }} &lt 大貫通 <br>
-		衝撃時：跳弾 &lt {{ stagger_ricochet }}〜(小貫通)〜{{stagger_penetration}} &lt 大貫通 <br>
+		通常時：跳弾 &lt {{ ricochet }}〜(小貫通)〜{{ penetration }} &lt= 大貫通 <br>
+		衝撃時：跳弾 &lt {{ stagger_ricochet }}〜(小貫通)〜{{stagger_penetration}} &lt= 大貫通 <br>
 	{% endif %}
 
 	<p>跳弾、小貫通、大貫通などの閾値を計算行います。衝撃時の計算も行えます。<br>
