@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+	
+	{%if is_input_error %}整数を入力してください<br>{% endif %}
+	<div id="input_form">
+	<form action="/penetration.html" method="post">
+		防御力
+		<input class="number" type="number" name="defense" min="0" value ="0"></input>
+		<input type="submit" value="Submit">
+	</form>
+	</div>
+
+	{% if has_result %}
+		通常時：跳弾 &lt {{ ricochet }}〜(小貫通)〜{{ penetration }} &lt 大貫通 <br>
+		衝撃時：跳弾 &lt {{ stagger_ricochet }}〜(小貫通)〜{{stagger_penetration}} &lt 大貫通 <br>
+	{% endif %}
+
+	<p>跳弾、小貫通、大貫通などの閾値を計算行います。衝撃時の計算も行えます。<br>
+	敵の攻撃力を跳弾させるとダメージを大幅に抑えることができます。<br>
+	小貫通時は攻撃力と防御力の差でダメージが大きく変わるので、<br>
+	貫通したとしてもなるべく防御力をあげることでダメージを抑えることができます。<br>
+	<p>
+	跳弾判定: 攻撃力 &lt= 防御力<br>
+	小貫通判定：防御力 &lt 攻撃力 &lt 防御力×1.3<br>
+	大貫通判定：防御力×1.3 &lt= 攻撃力<br>
+	衝撃による防御力低下:防御力×0.8
+	</p>
+
+{% endblock %}

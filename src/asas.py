@@ -7,5 +7,6 @@ app = webapp2.WSGIApplication(
 	('/impact_threshold_acv.html',page.ImpactThresholdAcvPage), 
 	('/lockon_range.html',page.LockonRangePage),
 	('/damage.html',page.DamagePage),
-	('/dps.html',page.DPSPage)
+	('/dps.html',page.DPSPage),
+	('/penetration.html',page.PenetrationPage)
 	],debug=True)

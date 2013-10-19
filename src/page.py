@@ -160,4 +160,34 @@ class DPSPage(webapp2.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
+class PenetrationPage(webapp2.RequestHandler):
+	page_name = 'penetration.html'
+	
+	def get(self):
+		template_value = {'is_input_error':False,'has_result':False}
+		path = os.path.join(os.path.dirname(__file__), self.page_name)
+		self.response.out.write(template.render(path, template_value))
+
+	def post(self):
+		
+		defense = self.request.get('defense')
+
+		template_value = {}
+
+		# damage, synchro_num, relが１以上の整数であるかどうかをチェックする
+		if defense.isdigit(): 
+			defense_int = int(defense)
+			template_value['ricochet']=defense_int
+			template_value['penetration']=int(defense_int*1.3)
+			template_value['stagger_ricochet']=int(defense_int*0.8)
+			template_value['stagger_penetration']=int(defense_int*0.8*1.3)
+			template_value['is_input_error']=False
+			template_value['has_result']=True
+		else:
+			template_value = {'is_input_error' : True,'has_result':False}
+
+		logging.info(template_value)
+		path = os.path.join(os.path.dirname(__file__), self.page_name)
+		self.response.out.write(template.render(path, template_value))
+
 
