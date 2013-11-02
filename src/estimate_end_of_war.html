@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}
+戦争終了時間予測
+{% endblock %}
+
+{% block content %}
+	
+	length:{{ areas|length }}<br>
+
+	{% for area in areas %}
+		{{ area.date }} , {{ area.area_num }} , {{ area.base_num }} , {{ area.durability }} <br>
+	{% endfor %}	
+
+{% endblock %}

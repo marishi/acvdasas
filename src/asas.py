@@ -1,5 +1,6 @@
 import webapp2
 import page
+import cronjob.area_updater
 
 app = webapp2.WSGIApplication(
 	[
@@ -8,5 +9,7 @@ app = webapp2.WSGIApplication(
 	('/lockon_range.html',page.LockonRangePage),
 	('/damage.html',page.DamagePage),
 	('/dps.html',page.DPSPage),
-	('/penetration.html',page.PenetrationPage)
+	('/penetration.html',page.PenetrationPage),
+	('/estimate_end_of_war.html',page.EstimateEndOfWarPage),
+	('/cronjob/area_updater', cronjob.area_updater.AreaUpdater)
 	],debug=True)

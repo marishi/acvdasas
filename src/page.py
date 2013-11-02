@@ -11,6 +11,7 @@ from google.appengine.api import users
 from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 from operator import attrgetter
+import cronjob.area_updater
 
 class MainPage(webapp2.RequestHandler):
 	def get(self):
@@ -190,4 +191,16 @@ class PenetrationPage(webapp2.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
+class EstimateEndOfWarPage(webapp2.RequestHandler):
+	page_name = 'estimate_end_of_war.html'
+	
+	def get(self):
+		areas = cronjob.area_updater.Area.all().order('-date')
+
+		for a in areas:
+			print a.date
+
+		template_value = { 'areas':areas }
+		path = os.path.join(os.path.dirname(__file__), self.page_name)
+		self.response.out.write(template.render(path, template_value))
 

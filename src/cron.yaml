@@ -1,0 +1,4 @@
+cron:
+- description: hourly Area updater
+  url: /cronjob/area_updater
+  schedule: every 1 hours
