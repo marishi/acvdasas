@@ -188,7 +188,6 @@ class PenetrationPage(webapp2.RequestHandler):
 		else:
 			template_value = {'is_input_error' : True,'has_result':False}
 
-		logging.info(template_value)
 		path = os.path.join( app_enviroment.template_path, self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
@@ -198,10 +197,26 @@ class PredictEndOfWarPage(webapp2.RequestHandler):
 	def get(self):
 		areas = world_info.Area.all().order('-date')
 
-		for a in areas:
-			print a.date
-
 		template_value = { 'areas':areas }
 		path = os.path.join( app_enviroment.template_path, self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
+class WorldInformationPage(webapp2.RequestHandler):
+	page_name = 'world_information.html'
+	
+	def get(self):
+		damage_average_3_area1 = world_info.averageAreaDamage(3,1)
+		damage_average_3_area4 = world_info.averageAreaDamage(3,4)
+		damage_average_3 = world_info.averageWorldDamage(3)
+		damage_average_24 = world_info.averageWorldDamage(24)
+		template_value = {}
+		template_value['damage_average_3_area1'] = damage_average_3_area1
+		template_value['damage_average_3_area4'] = damage_average_3_area4
+		template_value['damage_average_3'] = damage_average_3
+		template_value['damage_average_24'] = damage_average_24
+		path = os.path.join( app_enviroment.template_path, self.page_name)
+		self.response.out.write(template.render(path, template_value))
+
+
+
+	

@@ -3,6 +3,8 @@
 import urllib2
 import re
 from google.appengine.ext import db
+import datetime
+import logging
 
 class Area(db.Model):
 	area_num = db.IntegerProperty()
@@ -10,6 +12,46 @@ class Area(db.Model):
 	durability = db.IntegerProperty()
 	backbone = db.IntegerProperty()
 	date = db.DateTimeProperty(auto_now_add=True)
+
+def calcAverageAreaDamage(areas):
+        count = 0
+        s = 0
+
+        for a1,a2 in zip( areas[1:],areas[:-1] ):
+        
+                if a1.base_num != a2.base_num:
+                        continue
+
+                s += a2.durability - a1.durability
+                count +=1
+
+	if count == 0:
+		return 0
+        result = float(s)/count
+
+        return result
+
+def averageAreaDamage(hours, area_num):
+	lifetime = datetime.timedelta(hours=hours)
+	threshold = datetime.datetime.now() - lifetime
+	
+	# 同じエリアで、指定時間内の情報を日付順でソートして取得
+	query = "WHERE area_num =:1 AND date > :2 ORDER BY date"
+
+	#同じエリアだけを取得
+	areas = Area.gql(query,area_num,threshold).fetch(10000)
+	return calcAverageAreaDamage(areas)
+	
+
+def averageWorldDamage(hours):
+
+	s=0
+	for num in range(1,8):
+		#指定エリアの平均ダメージを取得
+		s += averageAreaDamage(hours,num)
+	
+	#　７エリア全体の１０分間のダメージ平均
+	return s / 7.0
 
 
 class WorldInformation:

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}
+ワールドモード情報
+{% endblock %}
+
+
+
+{% block content %}
+
+	戦争終結の予想時刻や現在の闘争基地を確認できます。<br>	
+
+	・テスト<br>
+	ここ３時間のエリア１のダメージ平均:{{ damage_average_3_area1 }}<br>
+	ここ３時間のエリア４のダメージ平均:{{ damage_average_3_area4 }}<br>
+	
+	・全体エリアのダメージ平均<br>
+	(1){{ damage_average_3 }}<br>
+	(2){{ damage_average_24 }}<br>
+{% endblock %}
