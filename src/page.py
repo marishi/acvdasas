@@ -191,8 +191,8 @@ class PenetrationPage(webapp2.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
-class EstimateEndOfWarPage(webapp2.RequestHandler):
-	page_name = 'estimate_end_of_war.html'
+class PredictEndOfWarPage(webapp2.RequestHandler):
+	page_name = 'predict_end_of_war.html'
 	
 	def get(self):
 		areas = cronjob.area_updater.Area.all().order('-date')
