@@ -3,6 +3,7 @@
 import webapp2
 import datetime
 import world_info
+from google.appengine.ext import db
 
 # エリア情報を更新します
 class AreaUpdater(webapp2.RequestHandler):
