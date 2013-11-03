@@ -39,7 +39,7 @@ def averageAreaDamage(hours, area_num):
 	query = "WHERE area_num =:1 AND date > :2 ORDER BY date"
 
 	#同じエリアだけを取得
-	areas = Area.gql(query,area_num,threshold).fetch(10000)
+	areas = Area.gql(query,area_num,threshold).fetch(100)
 	return calcAverageAreaDamage(areas)
 	
 

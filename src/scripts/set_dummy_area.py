@@ -11,8 +11,8 @@ class SetDummyArea(webapp2.RequestHandler):
 		
 				a = world_info.Area()
 				a.area_num = j
-				a.base_num = 5
-				a.durability = 40000 - 1000*i
+				a.base_num = 3
+				a.durability = 20000 - 1000*i
 				a.backbone = 1
 
 				a.put()
