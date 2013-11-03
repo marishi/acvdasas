@@ -9,10 +9,10 @@ from google.appengine.ext import db
 class AreaUpdater(webapp2.RequestHandler):
 	#現在のエリア情報を追加します	
 	def addNewAreaInfo(self):
-		world = world_info.WorldInformation()
-		world.init()
 		
-		for area in world.current_areas():
+		areas = world_info.getCurrentArea()
+		
+		for area in areas:
 			area.put()
 		
 	#24時間より前のエリア情報を削除します

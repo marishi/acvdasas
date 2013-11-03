@@ -13,6 +13,7 @@ class Area(db.Model):
 	backbone = db.IntegerProperty()
 	date = db.DateTimeProperty(auto_now_add=True)
 
+# エリアの経金ダメージを計算します
 def calcAverageAreaDamage(areas):
         count = 0
         s = 0
@@ -31,6 +32,9 @@ def calcAverageAreaDamage(areas):
 
         return result
 
+# エリアのダメージ平均を求めます
+# hours:何時間前までの時間を求めるか指定します
+# 
 def averageAreaDamage(hours, area_num):
 	lifetime = datetime.timedelta(hours=hours)
 	threshold = datetime.datetime.now() - lifetime
@@ -46,49 +50,48 @@ def averageAreaDamage(hours, area_num):
 def averageWorldDamage(hours):
 
 	s=0
+	count = 0
 	for num in range(1,8):
 		#指定エリアの平均ダメージを取得
-		s += averageAreaDamage(hours,num)
+		d = averageAreaDamage(hours,num)
+		#潰れたエリアor変化の無いエリアは対象外	
+		if d != 0:
+			s += d
+			count += 1
 	
-	#　７エリア全体の１０分間のダメージ平均
-	return s / 7.0
+	#　エリアのダメージ平均
+	return s / count
 
 
-class WorldInformation:
+def getCurrentArea():
+	url = 'http://acvdlink.armoredcore.net/p/acop/acvdlink/'
+	op = urllib2.urlopen(url)
+	html = op.read()
+	op.close()
 
-	html = ""
+	#areainfoを取得する
+	areas_regstr = "valArr\[\"areainfo\"\] = \[((?:.|\\n)+?)\];"
+	match = re.search(areas_regstr, html)	
 
-	def init(self):
-		url = 'http://acvdlink.armoredcore.net/p/acop/acvdlink/'
-		op = urllib2.urlopen(url)
-		self.html = op.read()
-		op.close()
+	areainfo = match.group(1)
 
-
-	#エリアの情報を取得します
-	def current_areas(self):
-		#areainfoを取得する
-		areas_regstr = "valArr\[\"areainfo\"\] = \[((?:.|\\n)+?)\];"
-		match = re.search(areas_regstr, self.html)	
-
-		areainfo = match.group(1)
-
-		#各エリアに分割
-		area_strs = re.findall("\[((?:.|\n)+?)\]",areainfo)
+	#各エリアに分割
+	area_strs = re.findall("\[((?:.|\n)+?)\]",areainfo)
 	
-		areas = []
-		#最初の要素はコメントなので無視
-		for area in area_strs[1:]:
-			data = area.split(',')
-			arnum = re.search("([0-9])+",data[0]).group(1)
+	areas = []
+	#最初の要素はコメントなので無視
+	for area in area_strs[1:]:
+		data = area.split(',')
 		
-			a = Area()
-			a.area_num = int(arnum)
-			a.base_num = int(data[5])
-			a.durability = int(data[9])
-			a.backbone = int(data[12])
-			areas.append( a )
+		arnum = re.search("([0-9])+",data[0]).group(1)
+		
+		a = Area()
+		a.area_num = int(arnum)
+		a.base_num = int(data[5])
+		a.durability = int(data[9])
+		a.backbone = int(data[12])
+		areas.append( a )
 
-		return areas
+	return areas
 
 
