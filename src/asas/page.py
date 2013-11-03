@@ -6,21 +6,22 @@ import os
 import weapon
 import logging
 import formula
+import area_updater
 
 from google.appengine.api import users
 from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 from operator import attrgetter
-import cronjob.area_updater
 
 class MainPage(webapp2.RequestHandler):
 	def get(self):
 		template_value={}
-		path = os.path.join(os.path.dirname(__file__), 'index.html')
+		print(__file__)
+		path = os.path.join(os.path.dirname(__file__), 'html/index.html')
 		self.response.out.write(template.render(path, template_value))
 
 class ImpactThresholdAcvPage(webapp2.RequestHandler):
-	page_name = 'impact_threshold_acv.html'
+	page_name = 'html/impact_threshold_acv.html'
 	
 	def get(self):
 		template_value = {'is_input_error':False,'has_result':False}
@@ -62,7 +63,7 @@ class ImpactThresholdAcvPage(webapp2.RequestHandler):
 		self.response.out.write(template.render(path, template_value))
 
 class LockonRangePage(webapp2.RequestHandler):
-	page_name = 'lockon_range.html'
+	page_name = 'html/lockon_range.html'
 	
 	def get(self):
 		template_value = {'is_input_error':False,'has_result':False}
@@ -93,7 +94,7 @@ class LockonRangePage(webapp2.RequestHandler):
 		self.response.out.write(template.render(path, template_value))
 
 class DamagePage(webapp2.RequestHandler):
-	page_name = 'damage.html'
+	page_name = 'html/damage.html'
 	
 	def get(self):
 		template_value = {'is_input_error':False,'has_result':False}
@@ -126,7 +127,7 @@ class DamagePage(webapp2.RequestHandler):
 
 
 class DPSPage(webapp2.RequestHandler):
-	page_name = 'dps.html'
+	page_name = 'html/dps.html'
 	
 	def get(self):
 		template_value = {'is_input_error':False,'has_result':False}
@@ -162,7 +163,7 @@ class DPSPage(webapp2.RequestHandler):
 		self.response.out.write(template.render(path, template_value))
 
 class PenetrationPage(webapp2.RequestHandler):
-	page_name = 'penetration.html'
+	page_name = 'html/penetration.html'
 	
 	def get(self):
 		template_value = {'is_input_error':False,'has_result':False}
@@ -192,10 +193,10 @@ class PenetrationPage(webapp2.RequestHandler):
 		self.response.out.write(template.render(path, template_value))
 
 class PredictEndOfWarPage(webapp2.RequestHandler):
-	page_name = 'predict_end_of_war.html'
+	page_name = 'html/predict_end_of_war.html'
 	
 	def get(self):
-		areas = cronjob.area_updater.Area.all().order('-date')
+		areas = area_updater.Area.all().order('-date')
 
 		for a in areas:
 			print a.date

@@ -10,7 +10,5 @@ handlers:
 - url: /images
   static_dir: images
 - url: /.*
-  script: asas.app
-- url: /cronjob/*
-  script: asas.app
+  script: asas.apphandler.app
   
