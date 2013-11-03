@@ -11,5 +11,5 @@ app = webapp2.WSGIApplication(
 	('/dps.html',page.DPSPage),
 	('/penetration.html',page.PenetrationPage),
 	('/predict_end_of_war.html',page.PredictEndOfWarPage),
-	('/cronjob/area_updater', area_updater.AreaUpdater)
+	('/area_updater', area_updater.AreaUpdater)
 	],debug=True)

@@ -2,14 +2,15 @@
 
 import urllib2
 import re
+from google.appengine.ext import db
 
-class Area:
-	
-	def __init__(self, area_num, base_num, durability, backbone):
-		self.area_num = area_num
-		self.base_num = base_num
-		self.durability = durability
-		self.backbone = backbone
+class Area(db.Model):
+	area_num = db.IntegerProperty()
+	base_num = db.IntegerProperty()
+	durability = db.IntegerProperty()
+	backbone = db.IntegerProperty()
+	date = db.DateTimeProperty(auto_now_add=True)
+
 
 class WorldInformation:
 
@@ -23,7 +24,7 @@ class WorldInformation:
 
 
 	#エリアの情報を取得します
-	def areas(self):
+	def current_areas(self):
 		#areainfoを取得する
 		areas_regstr = "valArr\[\"areainfo\"\] = \[((?:.|\\n)+?)\];"
 		match = re.search(areas_regstr, self.html)	
@@ -38,7 +39,12 @@ class WorldInformation:
 		for area in area_strs[1:]:
 			data = area.split(',')
 			arnum = re.search("([0-9])+",data[0]).group(1)
-			a = Area(int(arnum),  int(data[5]) ,int(data[9]), int(data[12]))
+		
+			a = Area()
+			a.area_num = int(arnum)
+			a.base_num = int(data[5])
+			a.durability = int(data[9])
+			a.backbone = int(data[12])
 			areas.append( a )
 
 		return areas

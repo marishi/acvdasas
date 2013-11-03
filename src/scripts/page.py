@@ -6,8 +6,8 @@ import os
 import weapon
 import logging
 import formula
-import area_updater
 import app_enviroment
+import world_info
 
 from google.appengine.api import users
 from google.appengine.ext import db
@@ -196,7 +196,7 @@ class PredictEndOfWarPage(webapp2.RequestHandler):
 	page_name = 'predict_end_of_war.html'
 	
 	def get(self):
-		areas = area_updater.Area.all().order('-date')
+		areas = world_info.Area.all().order('-date')
 
 		for a in areas:
 			print a.date
