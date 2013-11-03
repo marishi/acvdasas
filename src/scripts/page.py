@@ -7,6 +7,7 @@ import weapon
 import logging
 import formula
 import area_updater
+import app_enviroment
 
 from google.appengine.api import users
 from google.appengine.ext import db
@@ -16,16 +17,15 @@ from operator import attrgetter
 class MainPage(webapp2.RequestHandler):
 	def get(self):
 		template_value={}
-		print(__file__)
-		path = os.path.join(os.path.dirname(__file__), 'html/index.html')
+		path = os.path.join( app_enviroment.template_path , 'index.html')
 		self.response.out.write(template.render(path, template_value))
 
 class ImpactThresholdAcvPage(webapp2.RequestHandler):
-	page_name = 'html/impact_threshold_acv.html'
+	page_name = 'impact_threshold_acv.html'
 	
 	def get(self):
 		template_value = {'is_input_error':False,'has_result':False}
-		path = os.path.join(os.path.dirname(__file__), self.page_name)
+		path = os.path.join(  app_enviroment.template_path, self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
 	def post(self):
@@ -59,15 +59,15 @@ class ImpactThresholdAcvPage(webapp2.RequestHandler):
 			template_value = {'is_input_error' : True, 'has_result':False}
 
 		logging.info(template_value)
-		path = os.path.join(os.path.dirname(__file__), self.page_name)
+		path = os.path.join( app_enviroment.template_path, self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
 class LockonRangePage(webapp2.RequestHandler):
-	page_name = 'html/lockon_range.html'
+	page_name = 'lockon_range.html'
 	
 	def get(self):
 		template_value = {'is_input_error':False,'has_result':False}
-		path = os.path.join(os.path.dirname(__file__), self.page_name)
+		path = os.path.join( app_enviroment.template_path, self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
 	def post(self):
@@ -90,15 +90,15 @@ class LockonRangePage(webapp2.RequestHandler):
 			template_value = {'is_input_error' : True,'has_result':False}
 
 		logging.info(template_value)
-		path = os.path.join(os.path.dirname(__file__), self.page_name)
+		path = os.path.join( app_enviroment.template_path, self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
 class DamagePage(webapp2.RequestHandler):
-	page_name = 'html/damage.html'
+	page_name = 'damage.html'
 	
 	def get(self):
 		template_value = {'is_input_error':False,'has_result':False}
-		path = os.path.join(os.path.dirname(__file__), self.page_name)
+		path = os.path.join( app_enviroment.template_path, self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
 	def post(self):
@@ -122,16 +122,16 @@ class DamagePage(webapp2.RequestHandler):
 			template_value = {'is_input_error' : True,'has_result':False}
 
 		logging.info(template_value)
-		path = os.path.join(os.path.dirname(__file__), self.page_name)
+		path = os.path.join( app_enviroment.template_path, self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
 
 class DPSPage(webapp2.RequestHandler):
-	page_name = 'html/dps.html'
+	page_name = 'dps.html'
 	
 	def get(self):
 		template_value = {'is_input_error':False,'has_result':False}
-		path = os.path.join(os.path.dirname(__file__), self.page_name)
+		path = os.path.join( app_enviroment.template_path, self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
 	def paramCheck(self,n):
@@ -159,15 +159,15 @@ class DPSPage(webapp2.RequestHandler):
 			template_value = {'is_input_error' : True,'has_result':False}
 
 		logging.info(template_value)
-		path = os.path.join(os.path.dirname(__file__), self.page_name)
+		path = os.path.join( app_enviroment.template_path, self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
 class PenetrationPage(webapp2.RequestHandler):
-	page_name = 'html/penetration.html'
+	page_name = 'penetration.html'
 	
 	def get(self):
 		template_value = {'is_input_error':False,'has_result':False}
-		path = os.path.join(os.path.dirname(__file__), self.page_name)
+		path = os.path.join( app_enviroment.template_path, self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
 	def post(self):
@@ -189,11 +189,11 @@ class PenetrationPage(webapp2.RequestHandler):
 			template_value = {'is_input_error' : True,'has_result':False}
 
 		logging.info(template_value)
-		path = os.path.join(os.path.dirname(__file__), self.page_name)
+		path = os.path.join( app_enviroment.template_path, self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
 class PredictEndOfWarPage(webapp2.RequestHandler):
-	page_name = 'html/predict_end_of_war.html'
+	page_name = 'predict_end_of_war.html'
 	
 	def get(self):
 		areas = area_updater.Area.all().order('-date')
@@ -202,6 +202,6 @@ class PredictEndOfWarPage(webapp2.RequestHandler):
 			print a.date
 
 		template_value = { 'areas':areas }
-		path = os.path.join(os.path.dirname(__file__), self.page_name)
+		path = os.path.join( app_enviroment.template_path, self.page_name)
 		self.response.out.write(template.render(path, template_value))
 

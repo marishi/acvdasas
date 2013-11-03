@@ -10,5 +10,5 @@ handlers:
 - url: /images
   static_dir: images
 - url: /.*
-  script: asas.apphandler.app
+  script: scripts.apphandler.app
   
