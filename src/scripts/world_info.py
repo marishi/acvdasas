@@ -76,6 +76,11 @@ class WorldInformation:
 	def totalDurability(self):
 		areas = Area.all().order("-date")
 		# 最新のエリアのみを取得
+		d = areas.get()
+
+		if d == None:
+			return 0
+
 		current_areas = areas.filter("date =" , areas.get().date)
 
 		s = 0
