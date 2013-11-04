@@ -73,21 +73,23 @@ class WorldInformation:
 		#　エリアのダメージ平均
 		return s / count
 
-	def totalCurrentDurability(self):
+	def totalDurability(self):
 		areas = Area.all().order("-date")
 		# 最新のエリアのみを取得
-		
 		current_areas = areas.filter("date =" , areas.get().date)
-		# エリアの耐久値を合計
-		result = reduce( lambda s,a : s + a.durability , current_areas,0)
-		return result
+
+		s = 0
+		for area in current_areas:
+			s += (area.base_num - 1)*400000 + area.durability
+
+		return s
 
 	def predictLatestRemainingMinutes(self, hours):
 		damage = self.averageDamage(hours)
 		if damage == 0:
 			return 0
 		# あと何分で戦争が終わるか求める
-		minutes = self.totalCurrentDurability() / damage
+		minutes = self.totalDurability() / damage
 		return minutes
 
 	def predictLatestTime(self, hours):

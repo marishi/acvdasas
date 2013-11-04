@@ -213,6 +213,7 @@ class WorldInformationPage(Page):
 		template_value['damage_average_24'] = damage_average_24
 		template_value['latest_remaining_time'] = worldInfo.predictLatestRemainingMinutes(3)
 		template_value['latest_time'] = worldInfo.predictLatestTime(3)
+		template_value['total_durability'] = worldInfo.totalDurability()
 
 		self.write(template_value)
 
