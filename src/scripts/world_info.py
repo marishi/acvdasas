@@ -19,7 +19,12 @@ class Area(db.Model):
 	def totalDurability(self):
 		if self.base_num == 0:
 			return 0
-		return (self.base_num - 1)*250000 + self.durability
+	
+		predictBaseDurabilities = map( lambda x : x*56000 + 100000 ,  range(0,7) )
+		result = sum( predictBaseDurabilities[:self.base_num -1] ) + self.durability
+		logging.info(result)
+		return result
+		#return (self.base_num - 1)*250000 + self.durability
 
 class AreaInformation:
 	area_num = 0	
