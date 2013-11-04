@@ -39,7 +39,7 @@ class AreaInformation:
 	
 	        return result
 	
-	# エリアの１時間毎のダメージ平均を求めます
+	# エリアの１分毎のダメージ平均を求めます
 	# hours:何時間前から平均を求める指定します
 	# 
 	def averageDamage(self,hours):
@@ -52,7 +52,7 @@ class AreaInformation:
 		#同じエリアだけを取得
 		areas = Area.gql(query,self.area_num,threshold).fetch(100)
 		diffAverage = self.averageDurabilityDiff(areas)
-		return diffAverage * 60.0 / app_enviroment.scraping_gap
+		return diffAverage / app_enviroment.scraping_gap
 
 class WorldInformation:
 	def averageDamage(self, hours):
@@ -71,6 +71,27 @@ class WorldInformation:
 		#　エリアのダメージ平均
 		return s / count
 
+	def totalCurrentDurability(self):
+		areas = Area.all().order("-date")
+		# 最新のエリアのみを取得
+		
+		current_areas = areas.filter("date =" , areas.get().date)
+		# エリアの耐久値を合計
+		result = reduce( lambda s,a : s + a.durability , current_areas,0)
+		return result
+
+	def predictLatestRemainingMinutes(self, hours):
+		damage = self.averageDamage(hours)
+
+		# あと何分で戦争が終わるか求める
+		minutes = self.totalCurrentDurability() / damage
+		return minutes
+
+	def predictLatestTime(self, hours):
+		remaining_minutes = self.predictLatestRemainingMinutes(hours)
+		remtime = datetime.timedelta(minutes=remaining_minutes)
+		remdate = datetime.datetime.now() + remtime
+		return remdate
 
 def getCurrentArea():
 	url = 'http://acvdlink.armoredcore.net/p/acop/acvdlink/'
@@ -87,6 +108,7 @@ def getCurrentArea():
 	#各エリアに分割
 	area_strs = re.findall("\[((?:.|\n)+?)\]",areainfo)
 	
+	date = datetime.datetime.now()
 	areas = []
 	#最初の要素はコメントなので無視
 	for area in area_strs[1:]:
@@ -99,6 +121,7 @@ def getCurrentArea():
 		a.base_num = int(data[5])
 		a.durability = int(data[9])
 		a.backbone = int(data[12])
+		a.date = date
 		areas.append( a )
 
 	return areas

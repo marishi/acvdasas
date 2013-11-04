@@ -216,6 +216,8 @@ class WorldInformationPage(webapp2.RequestHandler):
 		template_value['damage_average_3_area4'] = damage_average_3_area4
 		template_value['damage_average_3'] = damage_average_3
 		template_value['damage_average_24'] = damage_average_24
+		template_value['latest_remaining_time'] = worldInfo.predictLatestRemainingMinutes(3)
+		template_value['latest_time'] = worldInfo.predictLatestTime(3)
 		path = os.path.join( app_enviroment.template_path, self.page_name)
 		self.response.out.write(template.render(path, template_value))
 
