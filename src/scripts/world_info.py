@@ -80,6 +80,8 @@ class WorldInformation:
 
 		s = 0
 		for area in current_areas:
+			if area.base_num == 0:
+				pass
 			s += (area.base_num - 1)*400000 + area.durability
 
 		return s
