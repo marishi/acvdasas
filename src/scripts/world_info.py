@@ -17,15 +17,15 @@ class Area(db.Model):
 	date = db.DateTimeProperty(auto_now_add=True)
 
 	def totalDurability(self):
-		 return (self.base_num - 1)*250000 + self.durability
+		if self.base_num == 0:
+			return 0
+		return (self.base_num - 1)*250000 + self.durability
 
 class AreaInformation:
 	area_num = 0	
 
 	def __init__(self, area_num):
-		self.area_num = area_num
-
-	
+		self.area_num = area_num	
 	
 	# 保存されているエリア耐久値の時間ごとの差分を平均をします
 	def averageDurabilityDiff(self,areas):
@@ -104,9 +104,11 @@ class WorldInformation:
 
 	def minDurability(self):
 		current_areas = getCurrentArea()
+
 		#各勢力の耐久値合計
 		s = lambda i : sum( a.totalDurability() for a in current_areas if a.backbone == i ) 
 		durabilities = map( s , range(1,4) )
+
 		#耐久値０の勢力は除外
 		durabilities = filter( lambda d : d > 0 , durabilities )
 		#各勢力の耐久値を組み合わせ、最小のパターンを探す       
