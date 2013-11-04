@@ -22,16 +22,155 @@ class Area(db.Model):
 	
 		predictBaseDurabilities = map( lambda x : x*56000 + 100000 ,  range(0,7) )
 		result = sum( predictBaseDurabilities[:self.base_num -1] ) + self.durability
-		logging.info(result)
 		return result
-		#return (self.base_num - 1)*250000 + self.durability
 
 class AreaInformation:
-	area_num = 0	
+	area_num = 0
+	base_num = 0
+	name = ""
+	special_base_url = ""
+	hacking_base_url = ""
+	front_base_url = ""
+	backbone = ""
+	date = datetime.datetime.now()
 
 	def __init__(self, area_num):
-		self.area_num = area_num	
+		self.area_num = area_num
+		
+		names = [
+			"NORTH FRONTIER","FAR EAST","MIDDLE EAST","SOUTH FRONTIER",
+			"MID CONTINENT","SOUTH ISLAND","NEW FRONTIER"]
+
+		north_frontier_url = "/images/north_frontier/"
+		far_east_url = "/images/far_east/"
+		middle_east_url = "/images/middle_east/"
+		south_frontier_url = "/images/south_frontier/"
+		mid_continent_url = "/images/mid_continent/"
+		south_island_url = "/images/south_islands/"
+		new_frontier_url = "/images/new_frontier/"
+
+		special_bases = [
+			north_frontier_url +  "galef_plant.png",
+			far_east_url + "kensky_base.png",
+			middle_east_url + "alg742_181.png",
+			south_frontier_url + "raziana_base.png",
+			mid_continent_url + "zilma_borough.png",
+			south_island_url + "fort_denis.png",
+			new_frontier_url + "karmat_base.png" ]
+		
+		hacking_bases = [
+			north_frontier_url + "brew_city.png",
+			far_east_url + "yunsk_canyon.png",
+			middle_east_url + "old_duman.png",
+			south_frontier_url + "old_uriae.png",
+			mid_continent_url + "pask_field.png",
+			south_island_url + "maldan_city.png",
+			new_frontier_url + "massif_dolango.png" ]
 	
+		north_frontier_bases = [
+			"alloy_gate_city.png",
+			"windy_city.png",
+			"windy_city_night.png",
+			"big_d_tunnel.png",
+			"big_d_tunnel_working.png",
+			"brew_city.png",
+			"galef_plant.png",
+			"agria_m42.png",
+			"none.png"]
+		north_frontier_bases = map( lambda a : north_frontier_url + a , north_frontier_bases )
+
+		far_east_bases = [
+			"andry_city.png",
+			"pierm_snowfield.png",
+			"yorga_base.png",
+			"yorga_base_blizzard.png",
+			"yunsk_canyon.png",
+			"miynsky_hills.png",
+			"miynsky_hills_bombing.png",
+			"kensky_base.png",
+			"none.png" ]
+		far_east_bases = map( lambda a : far_east_url + a , far_east_bases )
+	
+		middle_east_bases = [
+			"ratona_naval_port.png",
+			"old_duman.png",
+			"mazar_tomb.png",
+			"mazar_tomb_night.png",
+			"samir_canyon.png",
+			"quet_hills.png",
+			"alg742_181.png",
+			"alg742_181_reboot.png",
+			"none.png"]
+		middle_east_bases = map( lambda a : middle_east_url + a , middle_east_bases)
+
+		south_frontier_bases = [
+			"opal_cave.png",
+			"opal_cave_depth.png",
+			"tauraca_cave.png",
+			"calpin_wetland.png",
+			"old_uriae.png",
+			"emapolice.png",
+			"emapolice_sunrise.png",
+			"raziana_base.png",
+			"none.png"]
+		south_frontier_bases = map( lambda a : south_frontier_url + a, south_frontier_bases)
+
+		mid_continent_bases = [
+			"vorka_city.png",
+			"magion_city.png",
+			"barozniki_ts.png",
+			"barozniki_ts_pollution.png",
+			"pask_field.png",
+			"pask_field_night.png",
+			"zilma_borough.png",
+			"under_tower_gf710.png",
+			"none.png"]
+		mid_continent_bases = map( lambda a : mid_continent_url + a, mid_continent_bases )
+
+		south_island_bases = [
+			"victoria_city.png",
+			"maldan_city.png",
+			"maldan_city_night.png",
+			"eduna_yard.png",
+			"fat_rocks.png",
+			"fat_rocks_flooded.png",
+			"fort_denis.png",
+			"fort_denis_inside_city.png",
+			"none.png"]
+		south_island_bases = map( lambda a : south_island_url + a, south_island_bases )
+
+		new_frontier_bases = [
+			"route_n64.png",
+			"route_r1024.png",
+			"dozur_desert.png",
+			"dozur_desert_bombing.png",
+			"vosto_base_duststorm.png",
+			"vosto_base.png",
+			"massif_dolango.png",
+			"karmat_base.png",
+			"none.png"]
+		new_frontier_bases = map( lambda a : new_frontier_url + a, new_frontier_bases )
+
+		front_bases = [north_frontier_bases[::-1], far_east_bases[::-1], middle_east_bases[::-1],
+			south_frontier_bases[::-1],mid_continent_bases[::-1], south_island_bases[::-1],
+			new_frontier_bases[::-1]]
+	
+		self.name = names[area_num-1]
+		self.special_base_url = special_bases[area_num-1]
+		self.hacking_base_url = hacking_bases[area_num-1]
+
+		area_query = getCurrentArea()
+		area = area_query.filter("area_num =", area_num).get()
+		self.base_num = area.base_num
+		self.front_base_url = front_bases[area_num-1][area.base_num]
+		
+		#時刻設定
+		backbones = ["シリウス","ヴェニデ","EGF"]
+		self.backbone = backbones[area.backbone-1]
+		
+		#時刻設定
+		self.date = area.date.replace(tzinfo=timezone.UtcTzinfo())
+
 	# 保存されているエリア耐久値の時間ごとの差分を平均をします
 	def averageDurabilityDiff(self,areas):
 	        count = 0
@@ -74,7 +213,7 @@ def getCurrentArea():
 	if d == None:
 		return 0
 
-	return areas.filter("date =" , areas.get().date)
+	return areas.filter("date =" , d.date)
 
 
 

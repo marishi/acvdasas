@@ -8,16 +8,38 @@
 
 {% block content %}
 
-	戦争終結の予想時刻や現在の闘争基地を確認できます。<br>	
+戦争終結の予想時刻や現在の最前線基地を確認できます。<br>
+更新時間：{{ update_date|toJst|date:"Y/n/d G:i" }}<br>
 
-	・テスト<br>
-	ここ３時間のエリア１のダメージ平均:{{ damage_average_3_area1 }}<br>
-	ここ３時間のエリア４のダメージ平均:{{ damage_average_3_area4 }}<br>
-	
-	ここ３時間の全体エリアダメージ平均：{{ damage_average_3 }}<br>
-	ここ２４時間の全体エリアダメージ平均：{{ damage_average_24 }}<br>
-	予測合計耐久値 {{ total_durability }} <br>
-	予測最遅戦争終了残り時間：{{ latest_remaining_time }} <br>
-	予測最遅戦争終了時間：{{ latest_time|toJst|date:"Y/n/d G:i T(O)" }}<br>
-	予測最速戦争終了時間：{{ fastest_time|toJst|date:"Y/n/d G:i T(O)" }}<br>
+<div class="world">
+	{% for area_info in area_infos %}
+	<div class="area">
+	<div class="area_name">
+		{{ area_info.name }}<br>
+		{{ area_info.backbone }}
+	</div>
+	<div class="base">
+		最前線拠点<br>
+		<img src="{{ area_info.front_base_url }}">
+	</div>
+	<div class="base">
+		特別出撃拠点<br>
+		<img src="{{ area_info.special_base_url }}">
+	</div>
+	<div class="base">
+		データ回収拠点<br>
+		<img src="{{ area_info.hacking_base_url }}">
+	</div>
+	</div>
+	{% endfor %}
+</div>
+
+<br>
+予測戦争終了時間<br>
+最速戦争終了時間（3時間内平均）:{{ fastest_time3|toJst|date:"Y/n/d G:i" }}<br>
+最遅戦争終了時間（3時間内平均）:{{ latest_time3|toJst|date:"Y/n/d G:i" }}<br>
+最速戦争終了時間（24時間内平均）:{{ fastest_time24|toJst|date:"Y/n/d G:i" }}<br>
+最遅戦争終了時間（24時間内平均）:{{ latest_time24|toJst|date:"Y/n/d G:i" }}<br>
+
+
 {% endblock %}

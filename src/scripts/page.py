@@ -200,21 +200,19 @@ class WorldInformationPage(Page):
 	page_name = 'world_information.html'
 	
 	def get(self):
-		damage_average_3_area1 = world_info.AreaInformation(1).averageDamage(3)
-		damage_average_3_area4 = world_info.AreaInformation(4).averageDamage(3)
+
+		template_value = {}
+		areaInfos = [ world_info.AreaInformation(n) for n in range(1,8) ]
+		
+		template_value['area_infos'] = areaInfos
+		template_value['update_date'] = areaInfos[0].date
 		
 		worldInfo = world_info.WorldInformation()
-		damage_average_3 = worldInfo.averageDamage(3)
-		damage_average_24 = worldInfo.averageDamage(24)
-		template_value = {}
-		template_value['damage_average_3_area1'] = damage_average_3_area1
-		template_value['damage_average_3_area4'] = damage_average_3_area4
-		template_value['damage_average_3'] = damage_average_3
-		template_value['damage_average_24'] = damage_average_24
-		template_value['latest_remaining_time'] = worldInfo.predictLatestRemainingMinutes(3)
-		template_value['latest_time'] = worldInfo.predictLatestTime(3)
-		template_value['total_durability'] = worldInfo.totalDurability()
-		template_value['fastest_time'] = worldInfo.predictFastestTime(3)
+		template_value['latest_time3'] = worldInfo.predictLatestTime(3)
+		template_value['fastest_time3'] = worldInfo.predictFastestTime(3)
+
+		template_value['latest_time24'] = worldInfo.predictLatestTime(24)
+		template_value['fastest_time24'] = worldInfo.predictFastestTime(24)
 
 		self.write(template_value)
 
