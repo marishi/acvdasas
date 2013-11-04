@@ -15,11 +15,16 @@ class Area(db.Model):
 	backbone = db.IntegerProperty()
 	date = db.DateTimeProperty(auto_now_add=True)
 
+	def totalDurability(self):
+		 return (self.base_num - 1)*400000 + self.durability
+
 class AreaInformation:
 	area_num = 0	
 
 	def __init__(self, area_num):
 		self.area_num = area_num
+
+	
 	
 	# 保存されているエリア耐久値の時間ごとの差分を平均をします
 	def averageDurabilityDiff(self,areas):
@@ -87,7 +92,7 @@ class WorldInformation:
 		for area in current_areas:
 			if area.base_num == 0:
 				continue
-			s += (area.base_num - 1)*400000 + area.durability
+			s += area.totalDurability()
 
 		return s
 
