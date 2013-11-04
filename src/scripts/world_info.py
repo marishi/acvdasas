@@ -67,7 +67,8 @@ class WorldInformation:
 			if d != 0:
 				s += d
 				count += 1
-	
+		if count == 0
+			return 0
 		#　エリアのダメージ平均
 		return s / count
 
