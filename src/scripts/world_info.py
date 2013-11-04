@@ -51,7 +51,7 @@ class AreaInformation:
 		query = "WHERE area_num =:1 AND date > :2 ORDER BY date"
 	
 		#同じエリアだけを取得
-		areas = Area.gql(query,self.area_num,threshold).fetch(100)
+		areas = Area.gql(query,self.area_num,threshold).fetch(1000)
 		diffAverage = self.averageDurabilityDiff(areas)
 		return diffAverage / app_enviroment.scraping_gap
 
