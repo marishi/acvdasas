@@ -60,6 +60,18 @@ class AreaInformation:
 		diffAverage = self.averageDurabilityDiff(areas)
 		return diffAverage / app_enviroment.scraping_gap
 
+def getCurrentArea():
+	areas = Area.all().order("-date")
+	# 最新のエリアのみを取得
+	d = areas.get()
+
+	if d == None:
+		return 0
+
+	return areas.filter("date =" , areas.get().date)
+
+
+
 class WorldInformation:
 	def averageDamage(self, hours):
 	
@@ -79,14 +91,7 @@ class WorldInformation:
 		return s / count
 
 	def totalDurability(self):
-		areas = Area.all().order("-date")
-		# 最新のエリアのみを取得
-		d = areas.get()
-
-		if d == None:
-			return 0
-
-		current_areas = areas.filter("date =" , areas.get().date)
+		current_areas = getCurrentArea()
 
 		s = 0
 		for area in current_areas:
