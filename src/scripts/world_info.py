@@ -13,54 +13,63 @@ class Area(db.Model):
 	backbone = db.IntegerProperty()
 	date = db.DateTimeProperty(auto_now_add=True)
 
-# エリアの経金ダメージを計算します
-def calcAverageAreaDamage(areas):
-        count = 0
-        s = 0
+class AreaInformation:
+	area_num = 0	
 
-        for a1,a2 in zip( areas[1:],areas[:-1] ):
-        
-                if a1.base_num != a2.base_num:
-                        continue
-
-                s += a2.durability - a1.durability
-                count +=1
-
-	if count == 0:
-		return 0
-        result = float(s)/count
-
-        return result
-
-# エリアのダメージ平均を求めます
-# hours:何時間前までの時間を求めるか指定します
-# 
-def averageAreaDamage(hours, area_num):
-	lifetime = datetime.timedelta(hours=hours)
-	threshold = datetime.datetime.now() - lifetime
+	def __init__(self, area_num):
+		self.area_num = area_num
 	
-	# 同じエリアで、指定時間内の情報を日付順でソートして取得
-	query = "WHERE area_num =:1 AND date > :2 ORDER BY date"
-
-	#同じエリアだけを取得
-	areas = Area.gql(query,area_num,threshold).fetch(100)
-	return calcAverageAreaDamage(areas)
+	# エリアの経金ダメージを計算します
+	def calcAverageAreaDamage(self,areas):
+	        count = 0
+	        s = 0
+	
+	        for a1,a2 in zip( areas[1:],areas[:-1] ):
+	        
+	                if a1.base_num != a2.base_num:
+	                        continue
+	
+	                s += a2.durability - a1.durability
+	                count +=1
+	
+		if count == 0:
+			return 0
+	        result = float(s)/count
+	
+	        return result
+	
+	# エリアのダメージ平均を求めます
+	# hours:何時間前までの時間を求めるか指定します
+	# 
+	def averageDamage(self,hours):
+		lifetime = datetime.timedelta(hours=hours)
+		threshold = datetime.datetime.now() - lifetime
+		
+		# 同じエリアで、指定時間内の情報を日付順でソートして取得
+		query = "WHERE area_num =:1 AND date > :2 ORDER BY date"
+	
+		#同じエリアだけを取得
+		areas = Area.gql(query,self.area_num,threshold).fetch(100)
+		return self.calcAverageAreaDamage(areas)
 	
 
-def averageWorldDamage(hours):
-
-	s=0
-	count = 0
-	for num in range(1,8):
-		#指定エリアの平均ダメージを取得
-		d = averageAreaDamage(hours,num)
-		#潰れたエリアor変化の無いエリアは対象外	
-		if d != 0:
-			s += d
-			count += 1
+class WorldInformation:
+	def averageDamage(self, hours):
 	
-	#　エリアのダメージ平均
-	return s / count
+		s=0
+		count = 0
+		for num in range(1,8):
+			#指定エリアの平均ダメージを取得
+			areaInfo = AreaInformation(num)
+			d = areaInfo.averageDamage(hours)
+			#潰れたエリアor変化の無いエリアは対象外	
+			if d != 0:
+				s += d
+				count += 1
+	
+		#　エリアのダメージ平均
+		return s / count	
+
 
 
 def getCurrentArea():

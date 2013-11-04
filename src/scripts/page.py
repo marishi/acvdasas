@@ -205,10 +205,12 @@ class WorldInformationPage(webapp2.RequestHandler):
 	page_name = 'world_information.html'
 	
 	def get(self):
-		damage_average_3_area1 = world_info.averageAreaDamage(3,1)
-		damage_average_3_area4 = world_info.averageAreaDamage(3,4)
-		damage_average_3 = world_info.averageWorldDamage(3)
-		damage_average_24 = world_info.averageWorldDamage(24)
+		damage_average_3_area1 = world_info.AreaInformation(1).averageDamage(3)
+		damage_average_3_area4 = world_info.AreaInformation(4).averageDamage(3)
+		
+		worldInfo = world_info.WorldInformation()
+		damage_average_3 = worldInfo.averageDamage(3)
+		damage_average_24 = worldInfo.averageDamage(24)
 		template_value = {}
 		template_value['damage_average_3_area1'] = damage_average_3_area1
 		template_value['damage_average_3_area4'] = damage_average_3_area4
