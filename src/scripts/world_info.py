@@ -6,6 +6,7 @@ from google.appengine.ext import db
 import datetime
 import logging
 import app_enviroment
+from filters import timezone
 
 class Area(db.Model):
 	area_num = db.IntegerProperty()
@@ -67,7 +68,7 @@ class WorldInformation:
 			if d != 0:
 				s += d
 				count += 1
-		if count == 0
+		if count == 0:
 			return 0
 		#　エリアのダメージ平均
 		return s / count
@@ -83,7 +84,8 @@ class WorldInformation:
 
 	def predictLatestRemainingMinutes(self, hours):
 		damage = self.averageDamage(hours)
-
+		if damage == 0:
+			return 0
 		# あと何分で戦争が終わるか求める
 		minutes = self.totalCurrentDurability() / damage
 		return minutes
@@ -92,7 +94,7 @@ class WorldInformation:
 		remaining_minutes = self.predictLatestRemainingMinutes(hours)
 		remtime = datetime.timedelta(minutes=remaining_minutes)
 		remdate = datetime.datetime.now() + remtime
-		return remdate
+		return remdate.replace(tzinfo=timezone.UtcTzinfo())
 
 def getCurrentArea():
 	url = 'http://acvdlink.armoredcore.net/p/acop/acvdlink/'

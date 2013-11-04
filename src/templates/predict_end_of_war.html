@@ -9,7 +9,7 @@
 	length:{{ areas|length }}<br>
 
 	{% for area in areas %}
-		{{ area.date }} , (area):{{ area.area_num }} , (base):{{ area.base_num }} , (backbone):{{ area.backbone }}, (durability):{{ area.durability }} <br>
+		{{ area.date|toJst|date:"Y/m/d G:i T(O)" }} , (area):{{ area.area_num }} , (base):{{ area.base_num }} , (backbone):{{ area.backbone }}, (durability):{{ area.durability }} <br>
 	{% endfor %}	
 
 {% endblock %}
