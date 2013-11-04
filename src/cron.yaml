@@ -1,4 +1,4 @@
 cron:
 - description: hourly Area updater
-  url: /py/cronjob/area_updater
+  url: /area_updater
   schedule: every 30 minutes
