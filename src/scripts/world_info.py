@@ -7,6 +7,7 @@ import datetime
 import logging
 import app_enviroment
 from filters import timezone
+import itertools
 
 class Area(db.Model):
 	area_num = db.IntegerProperty()
@@ -16,7 +17,7 @@ class Area(db.Model):
 	date = db.DateTimeProperty(auto_now_add=True)
 
 	def totalDurability(self):
-		 return (self.base_num - 1)*400000 + self.durability
+		 return (self.base_num - 1)*250000 + self.durability
 
 class AreaInformation:
 	area_num = 0	
@@ -101,20 +102,44 @@ class WorldInformation:
 
 		return s
 
+	def minDurability(self):
+		current_areas = getCurrentArea()
+		#各勢力の耐久値合計
+		s = lambda i : sum( a.totalDurability() for a in current_areas if a.backbone == i ) 
+		durabilities = map( s , range(1,4) )
+		#耐久値０の勢力は除外
+		durabilities = filter( lambda d : d > 0 , durabilities )
+		#各勢力の耐久値を組み合わせ、最小のパターンを探す       
+		m = min( sum(c) for c in itertools.combinations( durabilities, len(durabilities)-1 ) )
+		return m
 
-	def predictLatestRemainingMinutes(self, hours):
+	def predictRemainingMinutes(self, hours, durability):
 		damage = self.averageDamage(hours)
 		if damage == 0:
 			return 0
 		# あと何分で戦争が終わるか求める
-		minutes = self.totalDurability() / damage
-		return minutes
+		return durability / damage
 
-	def predictLatestTime(self, hours):
-		remaining_minutes = self.predictLatestRemainingMinutes(hours)
-		remtime = datetime.timedelta(minutes=remaining_minutes)
+
+	def predictLatestRemainingMinutes(self, hours):
+		return self.predictRemainingMinutes(hours, self.totalDurability())
+
+	def predictFastestRemainingMinutes(self, hours):
+		return self.predictRemainingMinutes(hours, self.minDurability())
+
+	#現在時刻に指定分を足す
+	def addMinutesToNow(self, minutes):
+		remtime = datetime.timedelta(minutes=minutes)
 		remdate = datetime.datetime.now() + remtime
 		return remdate.replace(tzinfo=timezone.UtcTzinfo())
+	
+	def predictLatestTime(self, hours):
+		remaining_minutes = self.predictLatestRemainingMinutes(hours)
+		return self.addMinutesToNow(remaining_minutes)
+	
+	def predictFastestTime(self, hours):
+		remaining_minutes = self.predictFastestRemainingMinutes(hours)
+		return self.addMinutesToNow(remaining_minutes)
 
 def getAcvdLinkArea():
 	url = 'http://acvdlink.armoredcore.net/p/acop/acvdlink/'
