@@ -5,6 +5,7 @@ import re
 from google.appengine.ext import db
 import datetime
 import logging
+import app_enviroment
 
 class Area(db.Model):
 	area_num = db.IntegerProperty()
@@ -38,8 +39,8 @@ class AreaInformation:
 	
 	        return result
 	
-	# エリアのダメージ平均を求めます
-	# hours:何時間前までの時間を求めるか指定します
+	# エリアの１時間毎のダメージ平均を求めます
+	# hours:何時間前から平均を求める指定します
 	# 
 	def averageDamage(self,hours):
 		lifetime = datetime.timedelta(hours=hours)
@@ -50,8 +51,8 @@ class AreaInformation:
 	
 		#同じエリアだけを取得
 		areas = Area.gql(query,self.area_num,threshold).fetch(100)
-		return self.calcAverageAreaDamage(areas)
-	
+		diffAverage = self.calcAverageAreaDamage(areas)
+		return diffAverage * 60.0 / app_enviroment.scraping_gap
 
 class WorldInformation:
 	def averageDamage(self, hours):
@@ -68,8 +69,7 @@ class WorldInformation:
 				count += 1
 	
 		#　エリアのダメージ平均
-		return s / count	
-
+		return s / count
 
 
 def getCurrentArea():
