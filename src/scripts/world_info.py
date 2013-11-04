@@ -20,8 +20,8 @@ class AreaInformation:
 	def __init__(self, area_num):
 		self.area_num = area_num
 	
-	# エリアの経金ダメージを計算します
-	def calcAverageAreaDamage(self,areas):
+	# 保存されているエリア耐久値の時間ごとの差分を平均をします
+	def averageDurabilityDiff(self,areas):
 	        count = 0
 	        s = 0
 	
@@ -51,7 +51,7 @@ class AreaInformation:
 	
 		#同じエリアだけを取得
 		areas = Area.gql(query,self.area_num,threshold).fetch(100)
-		diffAverage = self.calcAverageAreaDamage(areas)
+		diffAverage = self.averageDurabilityDiff(areas)
 		return diffAverage * 60.0 / app_enviroment.scraping_gap
 
 class WorldInformation:
