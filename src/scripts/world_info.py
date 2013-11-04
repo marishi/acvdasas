@@ -125,6 +125,10 @@ def getCurrentArea():
 	#最初の要素はコメントなので無視
 	for area in area_strs[1:]:
 		data = area.split(',')
+
+                # たまにデータがかけていたりするのでチェック
+                if len(data) < 12:
+                        continue
 		
 		arnum = re.search("([0-9])+",data[0]).group(1)
 		
