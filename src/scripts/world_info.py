@@ -96,6 +96,7 @@ class WorldInformation:
 
 		return s
 
+
 	def predictLatestRemainingMinutes(self, hours):
 		damage = self.averageDamage(hours)
 		if damage == 0:
@@ -110,7 +111,7 @@ class WorldInformation:
 		remdate = datetime.datetime.now() + remtime
 		return remdate.replace(tzinfo=timezone.UtcTzinfo())
 
-def getCurrentArea():
+def getAcvdLinkArea():
 	url = 'http://acvdlink.armoredcore.net/p/acop/acvdlink/'
 	op = urllib2.urlopen(url)
 	html = op.read()

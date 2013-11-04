@@ -10,7 +10,7 @@ class AreaUpdater(webapp2.RequestHandler):
 	#現在のエリア情報を追加します	
 	def addNewAreaInfo(self):
 		
-		areas = world_info.getCurrentArea()
+		areas = world_info.getAcvdLinkArea()
 		
 		for area in areas:
 			area.put()
