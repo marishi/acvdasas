@@ -85,7 +85,9 @@ class AreaInformationImpl:
 	# 
 	def averageDamage(self,hours):
 		if self.has_ave_damage:
-			return ave_damage
+			return self.ave_damage
+
+		logging.info("recalc")
 
 		lifetime = datetime.timedelta(hours=hours)
 		threshold = datetime.datetime.now() - lifetime
@@ -99,8 +101,8 @@ class AreaInformationImpl:
 		
 		result = diffAverage / app_enviroment.scraping_gap
 
-		ave_damage = result
-		has_ave_damage = True
+		self.ave_damage = result
+		self.has_ave_damage = True
 		return result
 
 def clearAreaInformation():
