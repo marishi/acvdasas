@@ -202,10 +202,12 @@ class WorldInformationPage(Page):
 	def get(self):
 
 		template_value = {}
-		areaInfos = [ world_info.AreaInformation(n) for n in range(1,8) ]
+		area_infos = [ world_info.AreaInformation(n) for n in range(1,8) ]
+		area_damages = [ a.averageDamage(3) for a in area_infos ]
 		
-		template_value['area_infos'] = areaInfos
-		template_value['update_date'] = areaInfos[0].date
+		template_value['area_infos'] = area_infos
+		template_value['update_date'] = area_infos[0].date
+		template_value['area_damages'] = area_damages
 		
 		worldInfo = world_info.WorldInformation()
 		template_value['latest_time3'] = worldInfo.predictLatestTime(3)
