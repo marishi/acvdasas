@@ -46,8 +46,8 @@ class AreaInformationImpl:
 		self.special_base_url = area_dict.special_base.image_url
 		self.hacking_base_url = area_dict.hacking_base.image_url
 
-		query = getCurrentArea()
-		area = query.filter("area_num =", area_num).get()
+		areas = getCurrentArea()
+		area = filter(lambda a : a.area_num == self.area_num , areas )[0]
 		
 		self.base_num = area.base_num
 		if self.base_num == 0:
@@ -87,8 +87,6 @@ class AreaInformationImpl:
 		if self.has_ave_damage:
 			return self.ave_damage
 
-		logging.info("recalc")
-
 		lifetime = datetime.timedelta(hours=hours)
 		threshold = datetime.datetime.now() - lifetime
 		
@@ -105,8 +103,34 @@ class AreaInformationImpl:
 		self.has_ave_damage = True
 		return result
 
-def clearAreaInformation():
+has_current_area_instances = False
+current_area_instances = None
+def getCurrentArea():
+	if has_current_area_instances:
+		global current_area_instances
+		return current_area_instances
+
+
+	areas = Area.all().order("-date")
+	# 最新のエリアのみを取得
+	d = areas.get()
+
+	if d == None:
+		return 0
+
+	current_area_instances = areas.filter("date =" , d.date).fetch(100)
+	global has_current_area_instances
+	has_current_area_instances = True
+	return current_area_instances
+
+
+def clearWorld():
 	mod_impl_instances.clear()
+	global current_area_instances
+	current_area_instances = None
+	global has_current_area_instances
+	has_current_area_instances = False
+
 mod_impl_instances = {}
 class AreaInformation:
 
@@ -141,16 +165,6 @@ class AreaInformation:
 	def averageDamage(self,hours):
 		self.init()
 		return mod_impl_instances[self.area_num].averageDamage(hours)
-
-def getCurrentArea():
-	areas = Area.all().order("-date")
-	# 最新のエリアのみを取得
-	d = areas.get()
-
-	if d == None:
-		return 0
-
-	return areas.filter("date =" , d.date)
 
 
 
