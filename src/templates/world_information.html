@@ -7,8 +7,9 @@
 
 
 {% block content %}
-
+定期的に情報をACVD LINKから情報を取得し、<br>
 戦争終結の予想時刻や現在の最前線基地を確認できます。<br>
+各エリアの毎分のダメージも確認でき、勢力の強さを推測できます。<br>
 更新時間：{{ update_date|toJst|date:"Y/n/d G:i" }}<br>
 
 <div class="world">
@@ -17,6 +18,7 @@
 	<div class="area_name">
 		{{ area_info.name }}<br>
 		{{ area_info.backbone }}
+		{{ area_info.damge_per_minutes }}
 	</div>
 	<div class="base">
 		最前線拠点<br>
@@ -35,11 +37,20 @@
 </div>
 
 <br>
-予測戦争終了時間<br>
+・予測戦争終了時間（テスト中）<br>
+戦争終了一歩手前は２４時間内平均、戦争終了間近は３時間内平均を見るといいかもしれません。<br>
 最速戦争終了時間（3時間内平均）:{{ fastest_time3|toJst|date:"Y/n/d G:i" }}<br>
 最遅戦争終了時間（3時間内平均）:{{ latest_time3|toJst|date:"Y/n/d G:i" }}<br>
 最速戦争終了時間（24時間内平均）:{{ fastest_time24|toJst|date:"Y/n/d G:i" }}<br>
 最遅戦争終了時間（24時間内平均）:{{ latest_time24|toJst|date:"Y/n/d G:i" }}<br>
+
+・予測方法<br>
+３０分に１回各エリアの耐久値を取得しています。<br>
+エリア耐久値の差分から毎時間のダメージ、<br>
+各エリアの拠点の耐久値と残り拠点から合計耐久値を予測し、<br>
+戦争終了時間を推測しています。<br>
+最速終了時間は、１勢力が突出、残りの２勢力が現在の勢いで負け続けた場合、<br>
+最遅終了時間は、３勢力が拮抗した場合で計算しています。<br>
 
 
 {% endblock %}
