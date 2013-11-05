@@ -25,7 +25,7 @@ class Area(db.Model):
 		result = sum( predictBaseDurabilities[:self.base_num -1] ) + self.durability
 		return result
 
-class AreaInformation:
+class AreaInformationImpl:
 	area_num = 0
 	base_num = 0
 	name = ""
@@ -34,6 +34,8 @@ class AreaInformation:
 	front_base_url = ""
 	backbone = ""
 	date = datetime.datetime.now()
+	ave_damage = 0
+	has_ave_damage = False
 
 	def __init__(self, area_num):
 		self.area_num = area_num
@@ -82,6 +84,9 @@ class AreaInformation:
 	# hours:何時間前から平均を求める指定します
 	# 
 	def averageDamage(self,hours):
+		if self.has_ave_damage:
+			return ave_damage
+
 		lifetime = datetime.timedelta(hours=hours)
 		threshold = datetime.datetime.now() - lifetime
 		
@@ -91,7 +96,49 @@ class AreaInformation:
 		#同じエリアだけを取得
 		areas = Area.gql(query,self.area_num,threshold).fetch(1000)
 		diffAverage = self.averageDurabilityDiff(areas)
-		return diffAverage / app_enviroment.scraping_gap
+		
+		result = diffAverage / app_enviroment.scraping_gap
+
+		ave_damage = result
+		has_ave_damage = True
+		return result
+
+def clearAreaInformation():
+	mod_impl_instances.clear()
+mod_impl_instances = {}
+class AreaInformation:
+
+	area_num = 0
+	base_num = 0
+	name = ""
+	special_base_url = ""
+	hacking_base_url = ""
+	front_base_url = ""
+	backbone = ""
+	date = datetime.datetime.now()
+
+	def __init__(self, area_num):
+		self.area_num = area_num
+		self.init()
+
+	def init(self):
+		if not mod_impl_instances.has_key(self.area_num):
+			mod_impl_instances[self.area_num] = AreaInformationImpl(self.area_num)
+		instance = mod_impl_instances[self.area_num]
+
+		self.area_num = instance.area_num
+		self.base_num = instance.base_num
+		self.name = instance.name
+		self.special_base_url = instance.special_base_url
+		self.hacking_base_url = instance.hacking_base_url
+		self.front_base_url = instance.front_base_url
+		self.backbone = instance.backbone
+		self.date = instance.date
+
+
+	def averageDamage(self,hours):
+		self.init()
+		return mod_impl_instances[self.area_num].averageDamage(hours)
 
 def getCurrentArea():
 	areas = Area.all().order("-date")

@@ -15,6 +15,8 @@ class AreaUpdater(webapp2.RequestHandler):
 		for area in areas:
 			area.put()
 		
+		world_info.clearAreaInformation()	
+		
 	#24時間より前のエリア情報を削除します
 	def maintainAreaInfo(self):
 		lifetime = datetime.timedelta(hours=24)

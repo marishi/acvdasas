@@ -44,6 +44,7 @@ def readBase(area_node,image_url):
 
 
 def readXml():
+	
 	dom = minidom.parse('static_data/area_data.xml')
 
 	area_dict = {}
