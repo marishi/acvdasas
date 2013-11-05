@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<world>
+
+
+<area id="1" special_id="2" hacking_id="3">
+	<area_name>NORTH FRONTIER</area_name>
+	<url>/images/north_frontier/</url>
+
+	<base id="8">
+		<base_name>ALLOY GATE CITY</base_name>
+		<image_file>alloy_gate_city.png</image_file>
+	</base>
+	<base id="7">
+		<base_name>WINDY CITY</base_name>
+		<image_file>windy_city.png</image_file>
+	</base>
+	<base id="6">
+		<base_name>WINDY CITY/NIGHT</base_name>
+		<image_file>windy_city_night.png</image_file>
+	</base>
+	<base id="5">
+		<base_name>BIG D TUNNEL</base_name>
+		<image_file>big_d_tunnel.png</image_file>
+	</base>
+	<base id="4">
+		<base_name>BIG D TUNNEL/WORKING</base_name>
+		<image_file>big_d_tunnel_working.png</image_file>
+	</base>
+	<base id="3">
+		<base_name>BREW CITY</base_name>
+		<image_file>brew_city.png</image_file>
+	</base>
+	<base id="2">
+		<base_name>GALEF PLANT</base_name>
+		<image_file>galef_plant.png</image_file>
+	</base>
+	<base id="1">
+		<base_name>AGRIA/M42</base_name>
+		<image_file>agria_m42.png</image_file>
+	</base>
+</area>
+
+<area id="2" special_id="1" hacking_id="4">
+	<area_name>FAR EAST</area_name>
+	<url>/images/far_east/</url>
+
+	<base id="8">
+		<base_name>ANDYR CITY</base_name>
+		<image_file>andyr_city.png</image_file>
+	</base>
+	<base id="7">
+		<base_name>PIERM SNOWFIELD</base_name>
+		<image_file>pierm_snowfield.png</image_file>
+	</base>
+	<base id="6">
+		<base_name>YORGA BASE</base_name>
+		<image_file>yorga_base.png</image_file>
+	</base>
+	<base id="5">
+		<base_name>YORGA BASE/BLIZZARD</base_name>
+		<image_file>yorga_base_blizzard.png</image_file>
+	</base>
+	<base id="4">
+		<base_name>YUNSK CANYON</base_name>
+		<image_file>yunsk_canyon.png</image_file>
+	</base>
+	<base id="3">
+		<base_name>MIYNSKY HILLS</base_name>
+		<image_file>miynsky_hills.png</image_file>
+	</base>
+	<base id="2">
+		<base_name>MIYNSKY HILLS/BOMBING</base_name>
+		<image_file>miynsky_hills_bombing.png</image_file>
+	</base>
+	<base id="1">
+		<base_name>KENSKY BASE</base_name>
+		<image_file>kensky_base.png</image_file>
+	</base>
+
+</area>
+
+
+<area id="3" special_id="2" hacking_id="7">
+	<area_name>MIDDLE EAST</area_name>
+	<url>/images/middle_east/</url>
+
+	<base id="8">
+		<base_name>RATONA NAVAL PORT</base_name>
+		<image_file>ratona_naval_port.png</image_file>
+	</base>
+	<base id="7">
+		<base_name>OLD DUMAN</base_name>
+		<image_file>old_duman.png</image_file>
+	</base>
+	<base id="6">
+		<base_name>MAZAR TOMB</base_name>
+		<image_file>mazar_tomb.png</image_file>
+	</base>
+	<base id="5">
+		<base_name>MAZAR_TOMB/NIGHT</base_name>
+		<image_file>mazar_tomb_night.png</image_file>
+	</base>
+	<base id="4">
+		<base_name>SAMIR CANYON</base_name>
+		<image_file>samir_canyon.png</image_file>
+	</base>
+	<base id="3">
+		<base_name>QUET HILLS</base_name>
+		<image_file>quet_hills.png</image_file>
+	</base>
+	<base id="2">
+		<base_name>ALG742-181</base_name>
+		<image_file>alg742_181.png</image_file>
+	</base>
+	<base id="1">
+		<base_name>ALG742-181/REBOOT</base_name>
+		<image_file>alg742_181_reboot.png</image_file>
+	</base>
+
+</area>
+
+<area id="4" special_id="1" hacking_id="4">
+	<area_name>SOUTH FRONTIER</area_name>
+	<url>/images/south_frontier/</url>
+
+	<base id="8">
+		<base_name>OPAL CAVE</base_name>
+		<image_file>opal_cave.png</image_file>
+	</base>
+	<base id="7">
+		<base_name>OPAL CAVE/DEPTH</base_name>
+		<image_file>opal_cave_depth.png</image_file>
+	</base>
+	<base id="6">
+		<base_name>TAURACA CAVE</base_name>
+		<image_file>tauraca_cave.png</image_file>
+	</base>
+	<base id="5">
+		<base_name>CALPIN WETLAND</base_name>
+		<image_file>calpin_wetland.png</image_file>
+	</base>
+	<base id="4">
+		<base_name>OLD URIAE</base_name>
+		<image_file>old_uriae.png</image_file>
+	</base>
+	<base id="3">
+		<base_name>EMAPOLICE</base_name>
+		<image_file>emapolice.png</image_file>
+	</base>
+	<base id="2">
+		<base_name>EMAPOLICE/SUNRISE</base_name>
+		<image_file>emapolice_sunrise.png</image_file>
+	</base>
+	<base id="1">
+		<base_name>RAZIANIA BASE</base_name>
+		<image_file>raziana_base.png</image_file>
+	</base>
+
+</area>
+
+<area id="5" special_id="2" hacking_id="4">
+	<area_name>MID CONTINENT</area_name>
+	<url>/images/mid_continent/</url>
+
+	<base id="8">
+		<base_name>VORKA CITY</base_name>
+		<image_file>vorka_city.png</image_file>
+	</base>
+	<base id="7">
+		<base_name>MAGION CITY</base_name>
+		<image_file>magion_city.png</image_file>
+	</base>
+	<base id="6">
+		<base_name>BOROZNIKI TS</base_name>
+		<image_file>borozniki_ts.png</image_file>
+	</base>
+	<base id="5">
+		<base_name>BOROZNIKI TS/POLLUTION</base_name>
+		<image_file>borozniki_ts_pollution.png</image_file>
+	</base>
+	<base id="4">
+		<base_name>PASK FIELD</base_name>
+		<image_file>pask_field.png</image_file>
+	</base>
+	<base id="3">
+		<base_name>PASK FIELD/NIGHT</base_name>
+		<image_file>pask_field_night.png</image_file>
+	</base>
+	<base id="2">
+		<base_name>ZILMA BOROUGH</base_name>
+		<image_file>zilma_borough.png</image_file>
+	</base>
+	<base id="1">
+		<base_name>UNDER TOWER GF710</base_name>
+		<image_file>under_toower_gf710.png</image_file>
+	</base>
+
+</area>
+
+<area id="6" special_id="2" hacking_id="7">
+	<area_name>SOUTH ISLANDS</area_name>
+	<url>/images/south_islands/</url>
+
+	<base id="8">
+		<base_name>VICTORIA CITY</base_name>
+		<image_file>victoria_city.png</image_file>
+	</base>
+	<base id="7">
+		<base_name>MALDAN_CITY</base_name>
+		<image_file>maldan_city.png</image_file>
+	</base>
+	<base id="6">
+		<base_name>MALDAN CITY/NIGHT</base_name>
+		<image_file>maldan_city_night.png</image_file>
+	</base>
+	<base id="5">
+		<base_name>EDUNA YARD</base_name>
+		<image_file>eduna_yard.png</image_file>
+	</base>
+	<base id="4">
+		<base_name>FAT ROCKS</base_name>
+		<image_file>fat_rocks.png</image_file>
+	</base>
+	<base id="3">
+		<base_name>FAT ROCKS/FLOODED</base_name>
+		<image_file>fat_rocks_flooded.png</image_file>
+	</base>
+	<base id="2">
+		<base_name>FORT DENIS</base_name>
+		<image_file>fort_denis.png</image_file>
+	</base>
+	<base id="1">
+		<base_name>FORT DENIS/INSIDE CITY</base_name>
+		<image_file>fort_denis_inside_city.png</image_file>
+	</base>
+
+</area>
+
+<area id="7" special_id="1" hacking_id="2">
+	<area_name>NEW FRONTIER</area_name>
+	<url>/images/new_frontier/</url>
+
+	<base id="8">
+		<base_name>ROUTE N64</base_name>
+		<image_file>route_n64.png</image_file>
+	</base>
+	<base id="7">
+		<base_name>ROUTE R1024</base_name>
+		<image_file>route_r1024.png</image_file>
+	</base>
+	<base id="6">
+		<base_name>DOZUR DESERT</base_name>
+		<image_file>dozur_desert.png</image_file>
+	</base>
+	<base id="5">
+		<base_name>DOZUR DESERT/BOMBING</base_name>
+		<image_file>dozur_desert_bombing.png</image_file>
+	</base>
+	<base id="4">
+		<base_name>VOSTO BASE/DUSTSTORM</base_name>
+		<image_file>vosto_base_duststorm.png</image_file>
+	</base>
+	<base id="3">
+		<base_name>VOSTO BASE</base_name>
+		<image_file>vosto_base.png</image_file>
+	</base>
+	<base id="2">
+		<base_name>MASSIF DOLANGO</base_name>
+		<image_file>massif_dolango.png</image_file>
+	</base>
+	<base id="1">
+		<base_name>KARMAT BASE</base_name>
+		<image_file>karmat_base.png</image_file>
+	</base>
+
+</area>
+
+
+
+</world>
